@@ -24,7 +24,7 @@
         function gtag_report_conversion(url) {
         var callback = function () {
             if (typeof(url) != 'undefined') {
-            window.location = url;
+                window.location = url;
             }
         };
         gtag('event', 'conversion', {
@@ -36,7 +36,8 @@
     </script>
     <script>
     function doAnalytics(){
-        onclick="gtag_report_conversion();"
+        //onclick="gtag_report_conversion();"
+        gtag_report_conversion();
     }
     </script>
 
@@ -222,7 +223,7 @@
 <body>
 
     <h1>PNSN SOLAR SYSTEM LLP</h1>
-    <h4> Rangirkhari, Silchar. <span style="font-weight: normal;">Open from 9AM to 10PM</span> </h4>
+    <h4> Rangirkhari, Silchar.</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
             
     <div class="header-links">
         <a class="button" onclick="doAnalytics();" style="background-color:#ee8; border:2px solid gold;" href="tel:+918638065505" target="_blank" data-umami-event="phone">
