@@ -75,7 +75,7 @@
             color:black;
             font-size: 3.5rem;
             font-weight: 600;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1rem 1.5rem 1rem;
             margin: auto;
             text-shadow:1px 1px 10px #4f4;
             border: 0px solid;
@@ -89,9 +89,9 @@
             color: whitesmoke;
             background-color: rgba(0,0,0,0.7);
             margin: auto;
-            padding: 0.5rem;
+            padding: 0.25rem;
             width: fit-content;
-            border-radius: 8px;
+            border-radius: 4px;
         }
         h4{
             font-size: 0.85rem;
@@ -208,8 +208,8 @@
         @media (max-width: 800px) {
             h1 {
               font-size: min(2.5rem, 10vw);
-              padding: 0.5rem 1rem;
-              max-width: 80%;
+              padding: 0.5rem 1rem 1.5rem 1rem;
+              max-width: 90%;
             }
             header {
                 margin-top: 25vh;
@@ -238,9 +238,9 @@
 <body>
 
     <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
-    <h4> Rangirkhari, Silchar</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
+    <h4 style="margin-top:-1.75em"> Rangirkhari, Silchar</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
             
-    <div class="header-links">
+    <div style="padding-top:1em;" class="header-links">
         <a class="button" onclick="doAnalytics();" style="background-color:#ee8; border:2px solid gold;" href="tel:+918638065505" target="_blank" data-umami-event="phone">
             &nbsp
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -256,9 +256,11 @@
           Whatsapp
         </a>
     </div>
+    <div style="font-style: normal; color:whitesmoke; line-height: 1.2;" class="slogan"> Trusted and Experienced with <br><b>many successful Solar Installations.</b> </div>
     <header>
+        
         <div style="display:block; width: fit-content;" class="slogan">SOLAR লাগান, &nbsp বিদ্যুতের বিল ভুলে যান !</div>
-        <div style="display:block; width:fit-content; padding:0.5em;" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
+        <div style="display:block; width: fit-content; max-width:95%; padding:0.5em;" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
         <img style="display:block; width: 200px;" class="pmsuryaghar" src="govt.jpg"></img>
         
         <div style="display:block; width: fit-content; font-style: normal; color:#4f8;" class="slogan">SOLAR কিভাবে কাজ করে ? &nbsp জেনে নিন👇</div>
@@ -271,7 +273,7 @@
         </div>
 
     </header>
-
+    
     <div class="header-links">
         <a class="button" onclick="doAnalytics();" style="background-color:#ee8; border:1px solid gold;" href="tel:+918638065505" target="_blank" data-umami-event="phone">
             &nbsp
