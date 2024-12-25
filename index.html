@@ -73,7 +73,7 @@
         h1{
             /*background-color: #ffffff;*/
             color:black;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 600;
             padding: 0.5rem 1rem;
             margin: auto;
@@ -100,11 +100,11 @@
             color:#004aad;
             background-color: rgba(255, 255, 255, 0.9);
             margin: auto;
-            padding: 0.5rem;
+            padding: 0.25rem;
             width: fit-content;
-            border-radius: 2px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 4px;
         }
         .slogan{
@@ -117,7 +117,7 @@
             font-family: "Baloo Da 2", sans-serif;
             font-optical-sizing: auto;
             font-style: oblique;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             margin:auto;
             margin-bottom: 4px;
         }
@@ -138,6 +138,7 @@
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
+            font-size:1rem;
         }
         a:hover {
             text-decoration: none;
@@ -184,8 +185,12 @@
         .headergap {
             padding-top: 30vh; 
         }
-        .ytvideo {
+        .ytvideo-container {
             padding: 0.5rem 0;
+        }
+        .ytvideo-frame {
+            width: 600px;
+            height: 600px;
         }
 
         .cursive-text {
@@ -207,7 +212,7 @@
               max-width: 80%;
             }
             header {
-                margin-top: 28vh;
+                margin-top: 25vh;
                 margin-bottom: 10px;
             }
             .container {
@@ -219,8 +224,12 @@
             a.button {
               display: inline-flex;
               align-items: center;
-              font-size: 18px;
+              font-size: 1rem;
               padding: 0.5rem 0.25rem;
+            }
+            .ytvideo-frame {
+                width: 90vw;
+                height: 90vw;
             }
 
         }
@@ -248,19 +257,19 @@
         </a>
     </div>
     <header>
-        
-        <div style="display:block; width:fit-content;" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
-        <img style="display:block; width: 180px;" class="pmsuryaghar" src="govt.jpg"></img>
-        
         <div style="display:block; width: fit-content;" class="slogan">SOLAR লাগান, &nbsp বিদ্যুতের বিল ভুলে যান !</div>
+        <div style="display:block; width:fit-content; padding:0.5em;" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
+        <img style="display:block; width: 200px;" class="pmsuryaghar" src="govt.jpg"></img>
+        
         <div style="display:block; width: fit-content; font-style: normal; color:#4f8;" class="slogan">SOLAR কিভাবে কাজ করে ? &nbsp জেনে নিন👇</div>
           
           <!--<div class="headergap"></div>-->
 
-        <div class="ytvideo">
+          <div class="ytvideo-container">
             <!-- <iframe width="320" height="320" frameBorder="0" src="https://www.youtube.com/embed/1FB64jnK4iY"></iframe> -->
-            <iframe width="320" height="320" frameBorder="0" src="https://www.youtube.com/embed/uxDfKol4cxc?rel=0"></iframe>
+            <iframe class="ytvideo-frame" frameBorder="0" src="https://www.youtube.com/embed/uxDfKol4cxc?rel=0"></iframe>
         </div>
+
     </header>
 
     <div class="header-links">
