@@ -111,15 +111,32 @@
             display: inline-block;
             font-weight: 500;
             padding: 0.5rem;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.7);
             border-radius: 4px;
-            color: yellow;
-            font-family: "Baloo Da 2", sans-serif;
+            color: whitesmoke;
+            font-family: "Baloo Da 2", Futura, sans-serif;
             font-optical-sizing: auto;
-            font-style: oblique;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            line-height: 1.2;
             margin:auto;
             margin-bottom: 4px;
+        }
+        .gold-slogan{
+            color: gold;
+            border: 3px double #ffecb3;
+            border-radius: 4px;
+            background: linear-gradient(to bottom, #cfc09f 30%, #ffecb3 50%, #cfc09f 80%);
+                background-clip: border-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            text-transform: uppercase;
+            font-size: min(1.5rem, 5vw);
+            line-height: 1.4em;
+            padding:0.5em;
+            font-weight: 400;
         }
         header {
             margin-top: 30vh;
@@ -240,7 +257,7 @@
     <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
     <h4 style="margin-top:-1.75em"> Rangirkhari, Silchar</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
             
-    <div style="padding-top:1em;" class="header-links">
+    <div style="padding-top:0.5em; padding-bottom: 0.5em;" class="header-links">
         <a class="button" onclick="doAnalytics();" style="background-color:#ee8; border:2px solid gold;" href="tel:+918638065505" target="_blank" data-umami-event="phone">
             &nbsp
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -256,13 +273,17 @@
           Whatsapp
         </a>
     </div>
-    <div style="font-style: normal; color:whitesmoke; line-height: 1.2;" class="slogan"> Trusted and Experienced with <br><b>many successful Solar Installations.</b> </div>
     <header>
-        
-        <div style="display:block; width: fit-content;" class="slogan">SOLAR লাগান, &nbsp বিদ্যুতের বিল ভুলে যান !</div>
+        <div style="padding:0;" class="slogan">
+            <div class="gold-slogan">
+              <div style="font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.5em;">TRUSTED &amp; EXPERIENCED</div>
+              <br>many Solar Installations<br>& many Happy Customers
+            </div>
+        </div>
+      
         <div style="display:block; width: fit-content; max-width:95%; padding:0.5em;" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
         <img style="display:block; width: 200px;" class="pmsuryaghar" src="govt.jpg"></img>
-        
+
         <div style="display:block; width: fit-content; font-style: normal; color:#4f8;" class="slogan">SOLAR কিভাবে কাজ করে ? &nbsp জেনে নিন👇</div>
           
           <!--<div class="headergap"></div>-->
@@ -271,6 +292,7 @@
             <!-- <iframe width="320" height="320" frameBorder="0" src="https://www.youtube.com/embed/1FB64jnK4iY"></iframe> -->
             <iframe class="ytvideo-frame" frameBorder="0" src="https://www.youtube.com/embed/uxDfKol4cxc?rel=0"></iframe>
         </div>
+        <div style="display:block; width: fit-content;" class="slogan">SOLAR লাগান, &nbsp বিদ্যুতের বিল ভুলে যান !</div>  
 
     </header>
     
