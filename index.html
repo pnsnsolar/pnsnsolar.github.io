@@ -54,7 +54,8 @@
     <script>
     function doAnalytics() {
         // Get the referrer
-        var referrer = new URL(document.referrer).hostname.toLowerCase();
+        var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
+        console.log('referrer', referrer)
         // Check if the referrer is from Facebook
         if (referrer === 'facebook.com' || referrer === 'fb.com' || referrer === 'instagram.com') {
             // Call Facebook Pixel conversion
