@@ -48,16 +48,15 @@
     /*fbq('track', 'PageView');*/
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1396465774737590&ev=PageView&noscript=1"
-    /></noscript>
+    src="https://www.facebook.com/tr?id=1396465774737590&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
 
     <script>
-    function doAnalytics(){
+    function doAnalytics() {
         // Get the referrer
         var referrer = new URL(document.referrer).hostname.toLowerCase();
         // Check if the referrer is from Facebook
-        if (referrer == 'facebook.com' || referrer === 'fb.com') || referrer === 'instagram.com') {
+        if (referrer === 'facebook.com' || referrer === 'fb.com' || referrer === 'instagram.com') {
             // Call Facebook Pixel conversion
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Contact');
