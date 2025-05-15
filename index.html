@@ -79,6 +79,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    
     <style>
         /* Basic styling */
         body {
@@ -103,16 +104,15 @@
             color:black;
             font-size: 3.5rem;
             font-weight: 600;
-            padding: 0.5rem 1rem 0.5rem 1rem;
+            padding: 0.15rem 1rem 0.15rem 1rem;
             margin: auto;
-            margin-top:0.5em;
+            margin-top:0.2em;
             text-shadow:1px 1px 10px #4f4;
             border: 0px solid;
             border-radius: 12px;
             background-color: rgba(255,255,255,0.7);
             width: fit-content;
             line-height: 1.1;
-
         }
         h2, h3, h4, h5 {
             color: lightgray;
@@ -127,26 +127,33 @@
             font-weight: 400;
         }
         .pmsuryaghar {
-            color:#004aad;
-            background-color: rgba(255, 255, 255, 0.9);
             margin: auto;
             padding: 0.25rem;
             width: fit-content;
             border-radius: 8px;
-            font-weight: bold;
             font-size: 1.1rem;
-            margin-bottom: 4px;
+        }
+        .pmsuryaghar-table {
+            color: silver;
+            border: 1px solid gray;
+            border-radius: 5px;
+            background-color:rgba(0, 0, 0, 0.7);
+            margin:0.1rem;
+        }
+        .pmsuryaghar-table td {
+            padding: 0.2rem 0.1rem;
+            font-size: 0.9rem;
+            text-align: left;
+            font-weight: normal;
         }
         .slogan{
             display: inline-block;
             font-weight: 500;
-            padding: 0.5rem;
-            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
             border-radius: 4px;
             color: whitesmoke;
             font-family: "Baloo Da 2", Futura, sans-serif;
             font-optical-sizing: auto;
-            font-size: 1.2rem;
             line-height: 1.2;
             margin:auto;
             margin-bottom: 4px;
@@ -154,44 +161,44 @@
         .slogan-wood{
             display: inline-block;
             font-weight: 500;
-            padding: 0.5rem;
-            background-color: rgba(19, 7, 0, 0.9);
+            padding: 0rem;
             border-radius: 4px;
             color: whitesmoke;
-            font-family: "Baloo Da 2", Futura, sans-serif;
+            background-color:rgba(30, 23, 18, 0.95);
+            font-family: "Playfair Display", serif;
             font-optical-sizing: auto;
-            font-size: 1.2rem;
             line-height: 1.2;
             margin:auto;
-            margin-bottom: 4px;
+            margin-bottom: 0.1em;
+            margin-top:0.1em;
         }
-
         .slogan-gold-text{
             color: gold;
-            border: 3px double #ffd0b3;
+            border: 5px double #d1a27c;
             border-radius: 4px;
-            background: linear-gradient(to right, #cfc09f 25%, #ffecb3 50%, #cfc09f 75% );
+            background: linear-gradient(to right, #e2c17f 25%, #ffdd76 50%, #e6c171 75% );
                 background-clip: border-box;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: #fff;
             font-family: 'Playfair Display', serif;
             position: relative;
-            text-transform: uppercase;
-            font-size: min(1.5rem, 5vw);
+            font-size: min(1.4rem, 6vw);
             line-height: 1.4em;
-            padding:0.5em;
+            padding:0.1em 0.5em;
             font-weight: normal;
         }
         header {
-            margin-top: 35vh;
-            margin-bottom: 10vh;
+            margin-top: 23vh;
+            margin-bottom: 1vh;
         }
         .header-links {
             margin: auto;
             width: fit-content;
             background-color: rgba(0,0,0,0.5);
-            padding: 1em 0.5em;;
+            padding: 0.25em;
+            margin: 0.25em auto;
+            border-radius: 6px;
             color:lightgray;
         }
         a.button {
@@ -200,10 +207,10 @@
             background: linear-gradient(rgba(255,255,255,0.2), rgba(200,200,200,0), rgba(100,100,100,0.2));
             color: black;
             text-decoration: none;
-            margin: 4px;
+            margin: 0.1rem;
             font-weight: bold;
             border: 1px gray solid;
-            padding: 0.5em 0.5em;
+            padding: 0.5rem 0.5rem;
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
@@ -248,9 +255,6 @@
             margin: auto;
             width: fit-content;
         }
-        .headergap {
-            padding-top: 30vh; 
-        }
         .ytvideo-container {
             padding: 0.5rem 0;
         }
@@ -271,14 +275,15 @@
         }
 
         /* Responsive design */
-        @media (max-width: 800px) {
+        @media (max-width: 600px) {
             h1 {
               font-size: min(2.5rem, 10vw);
               max-width: 90%;
+              margin-top: 0.2em;
             }
             header {
-                margin-top: 32vh;
-                margin-bottom: 8vh;
+                margin-top: 30vh;
+                margin-bottom: 1vh;
             }
             .container {
                 padding: 0 1rem;
@@ -296,23 +301,79 @@
                 width: 90vw;
                 height: 90vw;
             }
-            .header-links {
-                padding-top: 1em;
-            }
-
         }
+
+        /* Side masks for desktop */
+        .side-mask {
+            display: none; /* Hidden by default on mobile */
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: 15vw; /* Width of the side masks */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .left-mask {
+            left: 0;
+        }
+
+        .right-mask {
+            right: 0;
+        }
+
+        /* Show masks only on desktop */
+        @media (min-width: 801px) {
+            .side-mask {
+                display: block;
+            }
+            
+            /* Ensure content stays centered and doesn't go under masks */
+            body {
+                padding-left: 15vw;
+                padding-right: 15vw;
+                box-sizing: border-box;
+            }
+            
+            /* Adjust container width to account for masks */
+            .container {
+                max-width: 70vw;
+            }
+        }
+
     </style>
 </head>
 <body>
+    <div class="side-mask left-mask"></div>
+    <div class="side-mask right-mask"></div>
 
     <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
-    <img style="display:block; width: 180px; opacity: 0.85; margin-top:0.5em" class="pmsuryaghar" src="govt.jpg"></img>
+    <img style="display:block; width: 180px; opacity: 0.85; margin-top:0.1em" class="pmsuryaghar" src="govt.jpg"></img>
     <header>
-        <div style="display:block; width: fit-content; max-width:95%; padding:0.5em; white-space: nowrap; background-color:#ddd" class="pmsuryaghar"> PM Surya Ghar: Muft Bijli Yojana </div>
-        <div style="padding:0; margin-bottom:0.5em" class="slogan-wood">
+        <div style="display:block; width: fit-content; max-width:95%; " class="pmsuryaghar">
+        <div style="font-size: 1.1rem; font-weight: bold; width: fit-content; white-space: nowrap; color:#004aad; background-color: rgba(240, 240, 240, 0.9); padding:0.5em; border-radius: 5px; margin: 0.1em auto" > 
+            PM Surya Ghar: Muft Bijli Yojana 
+        </div>
+        <table class="pmsuryaghar-table" style="margin-top:0.5rem;">
+            <tr>
+                <td>• Upto ₹1,30,000/- Subsidy &nbsp;&nbsp; </td>
+                <td>• Loans from 7%</td>
+            </tr>
+            <tr>
+                <td>• Earn Money from<br>&nbsp;&nbsp;selling solar power</td>
+                <td>• Lower Electric Bill <br>&nbsp;&nbsp;by 80% or more </td>
+            </tr>
+        </table>
+
+        </div>
+        
+        <div class="slogan-wood">
             <div class="slogan-gold-text">
-              <div style="font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.5em;">TRUSTED &amp; EXPERIENCED</div>
-              <br>Many Solar Installations<br>& Happy Customers
+              <div style="font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.25em;">TRUSTED &amp; EXPERIENCED</div>
+              <br> 
+              <span style="font-variant-caps: small-caps; font-size:115%;">Reliable Solar Expert<br>& Many Happy Customers</span>
             </div>
         </div>
 
