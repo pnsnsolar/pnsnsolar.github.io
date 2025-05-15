@@ -63,7 +63,7 @@
                 fbq('track', 'Lead'); // Lead is the name of the conversion event that fb expects
                 console.log("Facebook Pixel conversion tracked");
             }
-        } else if (referrer === 'google.com' || referrer === 'google.co.in' || referrer === 'googleadservices.com') {
+        } else if (referrer === 'google.com' || referrer === 'google.co.in' || referrer === 'googleadservices.com' || referred === 'youtube.com') {
             // Call Google gtag conversion
             gtag_report_conversion();
             console.log("Google conversion tracked");
