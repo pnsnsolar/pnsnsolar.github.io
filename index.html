@@ -60,10 +60,11 @@
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
         const ref = document.referrer.toLowerCase();
+        const srcParam = urlParams.get('src');
 
         // Check if analytics has already been triggered for this visitor
         if (localStorage.getItem('doAnalyticsTriggered')) {
-            console.log('Analytics already triggered for this visitor');
+            //console.log('Analytics already triggered for this visitor');
             umami.track("rr:" + type);
             return;
         }
@@ -76,20 +77,21 @@
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead');
                 umami.track("fb:" + type);
-                console.log("Facebook Pixel conversion tracked");
+                //console.log("Facebook Pixel conversion tracked");
             }
         }
         // Google/Youtube attribution
-        else if (ref.includes('google.') || ref.includes('youtube.com') || ref.includes('googleadservices.com')) {
+        //else if (ref.includes('google.') || ref.includes('youtube.com') || ref.includes('googleadservices.com')) {
+        else if (srcParam === 'google-search') { // the other is google-pmax
             if (typeof gtag_report_conversion !== 'undefined') {
                 gtag_report_conversion();
                 umami.track("gg:" + type);
-                console.log("Google conversion tracked");
+                //console.log("Google conversion tracked");
             }
         }
         else {
             umami.track("nn:" + type);
-            console.log('Conversion tracked, no specific attribution');
+            //console.log('Conversion tracked, no specific attribution');
         }
     }
     </script>
