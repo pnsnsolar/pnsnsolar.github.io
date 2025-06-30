@@ -60,7 +60,17 @@
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
         const ref = document.referrer.toLowerCase();
+
+        // Check if analytics has already been triggered for this visitor
+        if (localStorage.getItem('doAnalyticsTriggered')) {
+            console.log('Analytics already triggered for this visitor');
+            umami.track("rr:" + type);
+            return;
+        }
         
+        // Mark analytics as triggered for this visitor
+        localStorage.setItem('doAnalyticsTriggered', 'true');
+    
         // Facebook attribution
         if (ref.includes('facebook.com') || ref.includes('fb.com') || ref.includes('instagram.com')) {
             if (typeof fbq !== 'undefined') {
