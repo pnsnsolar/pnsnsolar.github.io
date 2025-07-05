@@ -61,26 +61,28 @@
         const urlParams = new URLSearchParams(window.location.search);
         const srcParam = urlParams.get('src');
 
-        // Check if this visitor has already clicked a link
+        // facebook button clicked, not useful
+        if (type === 'facebook') {
+            umami.track(type);
+            return;
+        }
+
+        // Check if this visitor has already clicked a useful button
         if (localStorage.getItem('doClickAnalyticsTriggered')) {
             //console.log('Analytics already triggered for this visitor');
             umami.track("rr:" + type);
             return;
         }
 
-        // click on the facebook button, not useful
-        if (type === 'facebook') {
-            umami.track(type);
-        }
-        // Facebook attribution
-        else if (ref.includes('facebook.com') || ref.includes('fb.com') || ref.includes('instagram.com')) {
+        // Facebook traffic attribution
+        if (ref.includes('facebook.com') || ref.includes('fb.com') || ref.includes('instagram.com')) {
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead');
                 umami.track("fb:" + type);
                 //console.log("Facebook Pixel conversion tracked");
             }
         }
-        // Google/Youtube attribution
+        // Google/Youtube traffic attribution
         //else if (ref.includes('google.') || ref.includes('youtube.com') || ref.includes('googleadservices.com')) {
         else if (srcParam === 'google-search') { // the other is google-pmax
             if (typeof gtag_report_conversion !== 'undefined') {
