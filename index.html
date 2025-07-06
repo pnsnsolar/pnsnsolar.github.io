@@ -7,6 +7,9 @@
     <title>PNSN Solar System LLP - Government Registered Vendor for Solar in Silchar, Assam</title>
     <meta name="description" content="Top Vendor for Solar in Silchar. Silchar Solar Vendor. Silchar Solar Expert. Best Solar Panel and Inverter.">
 
+    <!-- umami.is analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="9450d401-ba94-40f5-b334-73309764b79e"></script>
+
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3Y4CR135B"></script>
@@ -20,7 +23,7 @@
     <!-- Event snippet for Contact Event conversion page
     In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
     <script>
-        function gtag_report_conversion(url) {
+        function gtag_report_search_conversion(url) {
             var callback = function () {
                 if (typeof(url) != 'undefined') {
                     window.location = url;
@@ -33,6 +36,23 @@
             return false;
         }
     </script>
+    <!-- Event snippet for pmax-contact conversion page
+    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+    function gtag_report_pmax_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-16789334441/UKg3CL638eoaEKnT48U-',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+    
 
     <!-- Meta Pixel Code -->
     <script>
@@ -64,12 +84,13 @@
         // facebook button clicked, not useful
         if (type === 'facebook') {
             umami.track(type);
+            console.log("facebook button click, not useful")
             return;
         }
 
         // Check if this visitor has already clicked a useful button
         if (localStorage.getItem('doClickAnalyticsTriggered')) {
-            //console.log('Analytics already triggered for this visitor');
+            console.log('Analytics already triggered for this visitor');
             umami.track("rr:" + type);
             return;
         }
@@ -78,22 +99,29 @@
         if (ref.includes('facebook.com') || ref.includes('fb.com') || ref.includes('instagram.com')) {
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead');
-                umami.track("fb:" + type);
-                //console.log("Facebook Pixel conversion tracked");
+                umami.track("facebook:" + type);
+                console.log("Facebook Pixel conversion tracked");
             }
         }
         // Google/Youtube traffic attribution
         //else if (ref.includes('google.') || ref.includes('youtube.com') || ref.includes('googleadservices.com')) {
         else if (srcParam === 'google-search') { // the other is google-pmax
-            if (typeof gtag_report_conversion !== 'undefined') {
-                gtag_report_conversion();
-                umami.track("gg:" + type);
-                //console.log("Google conversion tracked");
+            if (typeof gtag_report_search_conversion !== 'undefined') {
+                gtag_report_search_conversion();
+                umami.track("google-search:" + type);
+                console.log("Google search conversion tracked");
             }
         }
+        else if (srcParam === 'google-pmax') {
+            if (typeof gtag_report_pmax_conversion !== 'undefined') {
+                gtag_report_pmax_conversion();
+                umami.track("google-pmax:" + type);
+                console.log("Google PMax conversion tracked");
+            }  
+        }
         else {
-            umami.track("nn:" + type);
-            //console.log('Conversion tracked, no specific attribution');
+            umami.track("unknown:" + type);
+            console.log('Conversion tracked, no specific attribution');
         }
 
         // Remember the click 
@@ -102,13 +130,13 @@
     }
     </script>
 
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="9450d401-ba94-40f5-b334-73309764b79e"></script>
-
+ 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         /* Basic styling */
         body {
