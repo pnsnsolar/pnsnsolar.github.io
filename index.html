@@ -10,7 +10,6 @@
     <!-- umami.is analytics -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9450d401-ba94-40f5-b334-73309764b79e"></script>
 
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3Y4CR135B"></script>
     <script>
@@ -39,40 +38,39 @@
     <!-- Event snippet for pmax-contact conversion page
     In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
     <script>
-    function gtag_report_pmax_conversion(url) {
-      var callback = function () {
-        if (typeof(url) != 'undefined') {
-          window.location = url;
+        function gtag_report_pmax_conversion(url) {
+        var callback = function () {
+            if (typeof(url) != 'undefined') {
+            window.location = url;
+            }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16789334441/UKg3CL638eoaEKnT48U-',
+            'event_callback': callback
+        });
+        return false;
         }
-      };
-      gtag('event', 'conversion', {
-          'send_to': 'AW-16789334441/UKg3CL638eoaEKnT48U-',
-          'event_callback': callback
-      });
-      return false;
-    }
     </script>
     
-
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1396465774737590');
-    /*fbq('track', 'PageView');*/
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1396465774737590');
+        /*fbq('track', 'PageView');*/
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1396465774737590&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
 
     <script>
-    function doClickAnalytics(type="") {
+    function doClickAnalytics(event=none,type="") {
         // Get the referrer
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
@@ -81,6 +79,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const srcParam = urlParams.get('src');
 
+        /* DISABLED 
+        // stop event propogation
+        if (event && event.stopPropagation) {
+            event.stopPropagation();
+        }
+        */
+
         // facebook button clicked, not useful
         if (type === 'facebook') {
             umami.track(type);
@@ -88,18 +93,26 @@
             return;
         }
 
-        // Check if this visitor has already clicked a useful button
-        if (localStorage.getItem('doClickAnalyticsTriggered')) {
-            console.log('Analytics already triggered for this visitor');
-            umami.track("rr:" + type);
-            return;
+        try {
+            // Check if this visitor has already clicked a useful button
+            if (localStorage.getItem('doClickAnalyticsTriggered')) {
+                console.log('Analytics already triggered for this visitor');
+                if (typeof umami !== 'undefined') {
+                    umami.track("rr:" + type);
+                }
+                return;
+            } else {  // Remember the click 
+                localStorage.setItem('doClickAnalyticsTriggered', 'true');
+            }
+        } catch (e) {
+            console.error('Error accessing localStorage:', e);
         }
 
         // Facebook traffic attribution
         if (ref.includes('facebook.com') || ref.includes('fb.com') || ref.includes('instagram.com')) {
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead');
-                umami.track("facebook:" + type);
+                type = "facebook:" + type;
                 console.log("Facebook Pixel conversion tracked");
             }
         }
@@ -108,24 +121,25 @@
         else if (srcParam === 'google-search') { // the other is google-pmax
             if (typeof gtag_report_search_conversion !== 'undefined') {
                 gtag_report_search_conversion();
-                umami.track("google-search:" + type);
+                type = "google-search:" + type;
                 console.log("Google search conversion tracked");
             }
         }
         else if (srcParam === 'google-pmax') {
             if (typeof gtag_report_pmax_conversion !== 'undefined') {
                 gtag_report_pmax_conversion();
-                umami.track("google-pmax:" + type);
+                type = "google-pmax:" + type;
                 console.log("Google PMax conversion tracked");
-            }  
+            }
         }
         else {
-            umami.track("unknown:" + type);
+            type = "unknown:" + type;
             console.log('Conversion tracked, no specific attribution');
         }
 
-        // Remember the click 
-        localStorage.setItem('doClickAnalyticsTriggered', 'true');
+        if (typeof umami !== 'undefined') {
+            umami.track(type);
+        }
 
     }
     </script>
@@ -412,14 +426,15 @@
     <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
     
     <div class="header-links">
-        <a class="button" onclick="event.stopPropagation(); doClickAnalytics('wa1');" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
+        <!-- event.stopPropagation(); -->
+        <a class="button" onclick="doClickAnalytics(event, 'wa1');" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
             &nbsp;
             <svg style="align-self: center; padding:0; padding-right:0.25em;" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
               <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
             </svg> 
             Whatsapp&nbsp;
         </a>
-        <a class="button" onclick="event.stopPropagation(); doClickAnalytics('ph1');" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
+        <a class="button" onclick="doClickAnalytics(event, 'ph1');" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
             &nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" style="padding:0; padding-right:0.1em" fill="currentColor" width="30" height="30" viewBox="0 0 500 500">
                 <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -517,14 +532,14 @@
         </section>
     </div>
     <div class="header-links">
-        <a class="button" onclick="event.stopPropagation(); doClickAnalytics('wa2');" style="background-color:#6d8; border:2px solid #0e0; height:18px;" href="https://wa.me/918638065505" target="_blank"> 
+        <a class="button" onclick="doClickAnalytics(event, 'wa2');" style="background-color:#6d8; border:2px solid #0e0; height:18px;" href="https://wa.me/918638065505" target="_blank"> 
             &nbsp;
             <svg style="align-self: center; padding:0; padding-right:0.25em;" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
               <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
             </svg> 
             Whatsapp&nbsp;
         </a>
-        <a class="button" onclick="event.stopPropagation(); doClickAnalytics('ph2');" style="background-color:#eef; font-size:1.2em; border:2px solid lightskyblue; color:#2244bb; height:18px" href="tel:+918638065505" target="_blank">
+        <a class="button" onclick="doClickAnalytics(event, 'ph2');" style="background-color:#eef; font-size:1.2em; border:2px solid lightskyblue; color:#2244bb; height:18px" href="tel:+918638065505" target="_blank">
             &nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" style="padding:0; padding-right:0.1em" fill="currentColor" width="32" height="32" viewBox="0 0 500 500">
                 <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -539,7 +554,7 @@
 
         <div style="padding:0.25em"></div>
 
-        <a class="button" style="background-color:skyblue; border:1px solid #08f;" href="https://www.facebook.com/pnsnsolar" target="_blank" onclick="event.stopPropagation(); doClickAnalytics('facebook');">
+        <a class="button" style="background-color:skyblue; border:1px solid #08f;" href="https://www.facebook.com/pnsnsolar" target="_blank" onclick="doClickAnalytics(event, 'facebook');">
             &nbsp
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
               <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
