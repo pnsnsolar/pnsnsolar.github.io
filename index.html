@@ -74,7 +74,7 @@
         // Get the referrer
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
-        const ref = document.referrer.toLowerCase();
+        const ref = document.referrer ? document.referrer.toLowerCase() : "";
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const srcParam = urlParams.get('src');
@@ -260,8 +260,10 @@
             padding:0.1em 0.5em;
             font-weight: normal;
         }
-        header {
-            margin-top: 23vh;
+        .msg {
+            margin: auto;
+            width:fit-content;
+            margin-top: 15vh;
             margin-bottom: 1vh;
         }
         .header-links {
@@ -356,8 +358,8 @@
               max-width: 90%;
               margin-top: 0.2em;
             }
-            header {
-                margin-top: 22vh;
+            .msg {
+                margin-top: 10vh;
                 margin-bottom: 1vh;
             }
             .container {
@@ -446,7 +448,15 @@
             </svg> -->
             
         </a>
-        <h4 style="margin-top:0.5em; white-space: nowrap; font-size:0.9rem;"> OFFICE:&nbsp;&nbsp; Rangirkhari Point, Silchar</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
+        <h4 style="margin-top:0.5em; white-space: nowrap; font-size:0.9rem;">&nbsp;&nbsp; Rangirkhari Point, Silchar, Assam</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
+    </div>
+    <div class="pmsuryaghar">
+        <img style="display:block; width: 200px; opacity: 0.85; margin-top:0.1em" src="govt.jpg"></img>
+        <!-- <span style="display:block; margin:auto; max-width: 180px; font-size: 0.9rem; background-color: rgba(0, 0, 0, 0.5); padding: 0.1em;">for Solar in Silchar</span> -->
+    </div>
+
+    <div class="msg">
+        <img style="display:block; width:300px; opacity: 1; margin-top:0.1em" src="july-2025-msg.jpg"></img>
     </div>
 
     <header>
@@ -467,16 +477,14 @@
             </table>
         </div>
 
-        <div class="pmsuryaghar">
-            <img style="display:block; width: 220px; opacity: 0.85; margin-top:0.1em" src="govt.jpg"></img>
-            <span style="display:block; margin:auto; max-width: 180px; font-size: 0.9rem; background-color: rgba(0, 0, 0, 0.5); padding: 0.1em;">for Solar in Silchar, Assam</span>
-        </div>
+
         
+
         <div class="slogan-wood">
             <div class="slogan-gold-text">
-              <div style="font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.25em;">TRUSTED &amp; EXPERIENCED</div>
+              <div style="font-variant-caps: small-caps; font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.25em;">TRUSTED and EXPERIENCED</div>
               <br> 
-              <span style="font-variant-caps: small-caps; font-size:115%;">Expert Installation & Service <br>with Many Happy Customers</span>
+              <span style="font-variant-caps: small-caps; font-size:115%;">Expert Installation and Service <br>with Many Happy Customers</span>
             </div>
         </div>
 
