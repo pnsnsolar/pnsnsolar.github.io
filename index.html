@@ -70,7 +70,10 @@
     <!-- End Meta Pixel Code -->
 
     <script>
-    function doClickAnalytics(event=none,type="") {
+    const visitStartTime = new Date().getTime();
+
+    function doClickAnalytics(event=null, type="") {
+
         // Get the referrer
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
@@ -78,6 +81,13 @@
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const srcParam = urlParams.get('src');
+
+        const currentTime = new Date().getTime();
+        // Only track if visitor has been on the page for at least 1 second (1000 ms)
+        if (currentTime - visitStartTime < 1000) {
+            console.log("Click ignored: bot detected, visitor has not spent 1 second on page before clicking.");
+            return;
+        }
 
         /* DISABLED 
         // stop event propogation
@@ -88,7 +98,9 @@
 
         // facebook button clicked, not useful
         if (type === 'facebook') {
-            umami.track(type);
+            if (typeof umami !== 'undefined') {
+                umami.track(type);
+            }
             console.log("facebook button click, not useful")
             return;
         }
@@ -452,12 +464,12 @@
         <h4 style="margin-top:0.5em; white-space: nowrap; font-size:0.9rem;">&nbsp;&nbsp; Rangirkhari Point, Silchar, Assam</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
     </div>
     <div class="pmsuryaghar">
-        <img style="display:block; width: 200px; opacity: 0.85; margin-top:0.1em" src="govt.jpg"></img>
+        <img style="display:block; width: 200px; opacity: 0.85; margin-top:0.1em" src="govt.jpg" />
         <!-- <span style="display:block; margin:auto; max-width: 180px; font-size: 0.9rem; background-color: rgba(0, 0, 0, 0.5); padding: 0.1em;">for Solar in Silchar</span> -->
     </div>
 
     <div class="msg">
-        <img style="display:block; width:300px; opacity: 1; margin-top:0.1em" src="july-2025-msg.jpg"></img>
+        <img style="display:block; width:300px; opacity: 1; margin-top:0.1em" src="july-2025-msg.jpg" />
     </div>
 
     <header>
