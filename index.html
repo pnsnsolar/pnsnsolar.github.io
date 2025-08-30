@@ -84,7 +84,7 @@
 
         const currentTime = new Date().getTime();
         // Only track if visitor has been on the page for at least 1 second (1000 ms)
-        if (currentTime - visitStartTime < 1000) {
+        if (currentTime - visitStartTime < 2000) {
             console.log("Click ignored: bot detected, visitor has not spent 1 second on page before clicking.");
             if (typeof umami !== 'undefined') {
                 umami.track("bot:" + type);
