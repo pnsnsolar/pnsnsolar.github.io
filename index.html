@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
+    <meta charset="""UTF-8">
+    <meta name="""viewport" content="""width=device-width, initial-scale=""1.0">
+    <meta name="""theme-color" content="""#000000">
     <title>PNSN Solar System LLP - Government Registered Vendor for Solar in Silchar, Assam</title>
-    <meta name="description" content="Top Vendor for Solar in Silchar. Silchar Solar Vendor. Silchar Solar Expert. Best Solar Panel and Inverter.">
+    <meta name="""description" content="""Top Vendor for Solar in Silchar. Silchar Solar Vendor. Silchar Solar Expert. Best Solar Panel and Inverter.">
 
     <!-- umami.is analytics -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9450d401-ba94-40f5-b334-73309764b79e"></script>
@@ -72,7 +72,41 @@
     <script>
     const visitStartTime = new Date().getTime();
 
-    async function doClickAnalytics(event=null, type="") {
+    const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
+    //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
+    const maxDist = 60; // in km
+    const cityList = ['silchar', 'karimganj', 'hailakandi'];
+    let silcharDist = 0;
+    let city = "unknown";
+    let region = "unknown";
+
+    async function initLocationTracking() {    
+        try {
+            const userCoords = await getLocation();
+            // Add null check before accessing properties
+            if (userCoords && userCoords.latitude !== undefined && userCoords.longitude !== undefined) {
+                silcharDist = computeLatLongDistance(userCoords.latitude, userCoords.longitude, silcharLat, silcharLon);
+                city = userCoords.city ? userCoords.city.toLowerCase() : "unknown";
+                region = userCoords.region || "unknown";
+                
+                // Debug: checking if geolocation service works properly
+                if (typeof umami !== 'undefined') {
+                    umami.track("city:" + city + ", dist:" + silcharDist.toFixed(2) + "km");
+                }
+            } else {
+                console.warn('No valid geolocation data received');
+            }
+        } catch (e) {
+            console.error('Error getting location:', e);
+            silcharDist = 0;
+            city = "unknown";
+            region = "unknown";
+        }
+    }
+    // Call the function when page loads
+    document.addEventListener('DOMContentLoaded', initLocationTracking);
+
+    function doClickAnalytics(event=null, type="") {
         // Get the referrer
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
@@ -107,29 +141,26 @@
         }
 
         // ignore visitors from too-far away
-        try { 
-            const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
-            const maxDist = 60; // in km
-            //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
-            const userCoords = await getLocation();
-            
-            let userLat = userCoords.latitude;
-            let userLon = userCoords.longitude;
-            let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
-            let city = userCoords.city.toLowerCase();
-            let region = userCoords.region;
-            const cityList = ['silchar', 'karimganj', 'hailakandi'];
         
-            if (dist > maxDist && !(city in cityList)) {
-                console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
-                if (typeof umami !== 'undefined') {
-                    umami.track("far:" + city +":"+ type);
-                }
-                return;
+        /*const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
+        const maxDist = 60; // in km
+        //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
+        const userCoords = await getLocation();
+        
+        let userLat = userCoords.latitude;
+        let userLon = userCoords.longitude;
+        let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
+        let city = userCoords.city.toLowerCase();
+        let region = userCoords.region;
+        const cityList = ['silchar', 'karimganj', 'hailakandi'];
+        */
+
+        if (silcharDist > maxDist && !cityList.includes(city)) {
+            console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + silcharDist.toFixed(2) + " km)");
+            if (typeof umami !== 'undefined') {
+                umami.track("far:" + city +":"+ type);
             }
-            
-        } catch (e) {
-            console.error('Error getting location:', e);
+            return;
         }
         
         /* DISABLED 
