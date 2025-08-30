@@ -116,9 +116,9 @@
             let userLat = userCoords.latitude;
             let userLon = userCoords.longitude;
             let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
-            let city = userCoords.city;
+            let city = userCoords.city.toLowerCase();
             let region = userCoords.region;
-            const cityList = ['Silchar', 'Karimganj', 'Hailakandi'];
+            const cityList = ['silchar', 'karimganj', 'hailakandi'];
         
             if (dist > maxDist && !(city in cityList)) {
                 console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
