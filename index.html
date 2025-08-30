@@ -123,7 +123,7 @@
             if (dist > maxDist && !(city in cityList)) {
                 console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
                 if (typeof umami !== 'undefined') {
-                    umami.track("far:" + type);
+                    umami.track("far:" + city +":"+ type);
                 }
                 return;
             }
