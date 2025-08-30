@@ -91,24 +91,27 @@
             return;
         }
 
-        const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
-        //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
-        const userCoords = await getLocation();
+        try { //location based filtering
+            const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
+            //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
+            const userCoords = await getLocation();
+            
+            let userLat = userCoords.latitude;
+            let userLon = userCoords.longitude;
         
-        let userLat = userCoords.latitude;
-        let userLon = userCoords.longitude;
-    
-        if (userLat && userLon) {
-            let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
-            if (dist > 70){
-                console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
-                if (typeof umami !== 'undefined') {
-                    umami.track("far:" + type);
+            if (userLat && userLon) {
+                let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
+                if (dist > 70){
+                    console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
+                    if (typeof umami !== 'undefined') {
+                        umami.track("far:" + type);
+                    }
+                    return;
                 }
-                return;
             }
+        } catch (e) {
+            console.error('Error getting location:', e);
         }
-    
         
         /* DISABLED 
         // stop event propogation
