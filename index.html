@@ -81,8 +81,23 @@
         const urlParams = new URLSearchParams(window.location.search);
         const srcParam = urlParams.get('src');
 
-        const currentTime = new Date().getTime();
+        try {
+            // Check if this visitor has already clicked a useful button
+            if (localStorage.getItem('doClickAnalyticsTriggered')) {
+                console.log('Analytics already triggered for this visitor');
+                if (typeof umami !== 'undefined') {
+                    umami.track("rr:" + type);
+                }
+                return;
+            } else {  // Remember the click 
+                localStorage.setItem('doClickAnalyticsTriggered', 'true');
+            }
+        } catch (e) {
+            console.error('Error accessing localStorage:', e);
+        }
+
         // Only track if visitor has been on the page for at least 1 second (1000 ms)
+        const currentTime = new Date().getTime();
         if (currentTime - visitStartTime < 1000) {
             console.log("Click ignored: bot detected, visitor has not spent 1 second on page before clicking.");
             if (typeof umami !== 'undefined') {
@@ -91,24 +106,28 @@
             return;
         }
 
-        try { //location based filtering
+        // ignore visitors from too-far away
+        try { 
             const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
+            const maxDist = 60; // in km
             //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
             const userCoords = await getLocation();
             
             let userLat = userCoords.latitude;
             let userLon = userCoords.longitude;
+            let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
+            let city = userCoords.city;
+            let region = userCoords.region;
+            const cityList = ['Silchar', 'Karimganj', 'Hailakandi'];
         
-            if (userLat && userLon) {
-                let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
-                if (dist > 70){
-                    console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
-                    if (typeof umami !== 'undefined') {
-                        umami.track("far:" + type);
-                    }
-                    return;
+            if (dist > maxDist && !(city in cityList)) {
+                console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
+                if (typeof umami !== 'undefined') {
+                    umami.track("far:" + type);
                 }
+                return;
             }
+            
         } catch (e) {
             console.error('Error getting location:', e);
         }
@@ -127,21 +146,6 @@
             }
             console.log("facebook button click, not useful")
             return;
-        }
-
-        try {
-            // Check if this visitor has already clicked a useful button
-            if (localStorage.getItem('doClickAnalyticsTriggered')) {
-                console.log('Analytics already triggered for this visitor');
-                if (typeof umami !== 'undefined') {
-                    umami.track("rr:" + type);
-                }
-                return;
-            } else {  // Remember the click 
-                localStorage.setItem('doClickAnalyticsTriggered', 'true');
-            }
-        } catch (e) {
-            console.error('Error accessing localStorage:', e);
         }
 
         // Facebook traffic attribution
@@ -217,7 +221,7 @@
             }
             const data = await response.json();
             console.log('Geolocation data:', data);
-            return {'latitude':data.latitude, 'longitude':data.longitude};
+            return {'latitude':data.latitude, 'longitude':data.longitude, 'city':data.city, 'region':data.region, 'country':data.country_name}; 
         } catch (error) {
             console.log(error)
             return null;
