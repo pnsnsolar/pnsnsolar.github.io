@@ -72,8 +72,7 @@
     <script>
     const visitStartTime = new Date().getTime();
 
-    function doClickAnalytics(event=null, type="") {
-
+    async function doClickAnalytics(event=null, type="") {
         // Get the referrer
         //var referrer = new URL(document.referrer).hostname.toLowerCase().split('.').slice(-2).join('.')
         //console.log('referrer', referrer)
@@ -84,7 +83,7 @@
 
         const currentTime = new Date().getTime();
         // Only track if visitor has been on the page for at least 1 second (1000 ms)
-        if (currentTime - visitStartTime < 2000) {
+        if (currentTime - visitStartTime < 1000) {
             console.log("Click ignored: bot detected, visitor has not spent 1 second on page before clicking.");
             if (typeof umami !== 'undefined') {
                 umami.track("bot:" + type);
@@ -92,6 +91,25 @@
             return;
         }
 
+        const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
+        //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
+        const userCoords = await getLocation();
+        
+        let userLat = userCoords.latitude;
+        let userLon = userCoords.longitude;
+    
+        if (userLat && userLon) {
+            let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
+            if (dist > 70){
+                console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + dist.toFixed(2) + " km)");
+                if (typeof umami !== 'undefined') {
+                    umami.track("far:" + type);
+                }
+                return;
+            }
+        }
+    
+        
         /* DISABLED 
         // stop event propogation
         if (event && event.stopPropagation) {
@@ -157,6 +175,50 @@
             umami.track(type);
         }
 
+    }
+
+
+    /* ip-geolocation based filtering */
+    function computeLatLongDistance(srcLat, srcLon, destLat, destLon) {
+        
+        if (isNaN(srcLat) || isNaN(srcLon) || isNaN(destLat) || isNaN(destLon)) {
+            console.log("Invalid coordinates."); // Changed from distanceResultDiv.innerHTML
+            return Infinity; // Return a value indicating invalid distance
+        }
+
+        const R = 6371; // Radius of the Earth in km
+        const dLat = deg2rad(destLat - srcLat);
+        const dLon = deg2rad(destLon - srcLon);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(srcLat)) * Math.cos(deg2rad(destLat)) * // Changed from userLat to srcLat
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in km
+
+        return distance;
+    }
+    
+    /* Helper function to convert degrees to radians. */
+    function deg2rad(deg) {
+        return deg * (Math.PI/180);
+    }
+
+    /* get lat/lon of the visitor */
+    async function getLocation() {
+        try {
+            // Using a free IP geolocation API that uses HTTPS
+            const response = await fetch('https://ipapi.co/json/');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log('Geolocation data:', data);
+            return {'latitude':data.latitude, 'longitude':data.longitude};
+        } catch (error) {
+            console.log(error)
+            return null;
+        }
     }
     </script>
 
