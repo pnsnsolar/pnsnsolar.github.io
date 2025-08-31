@@ -89,10 +89,12 @@
                 city = userCoords.city ? userCoords.city.toLowerCase() : "unknown";
                 region = userCoords.region || "unknown";
                 
+                /*
                 // Debug: checking if geolocation service works properly
                 if (typeof umami !== 'undefined') {
                     umami.track("city:" + city + ", dist:" + silcharDist.toFixed(2) + "km");
                 }
+                */
             } else {
                 console.warn('No valid geolocation data received');
             }
@@ -104,7 +106,7 @@
         }
     }
     // Call the function when page loads
-    document.addEventListener('DOMContentLoaded', initLocationTracking);
+    //DISABLED document.addEventListener('DOMContentLoaded', initLocationTracking);
 
     function doClickAnalytics(event=null, type="") {
         // Get the referrer
@@ -140,36 +142,21 @@
             return;
         }
 
-        // ignore visitors from too-far away
-        
-        /*const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
-        const maxDist = 60; // in km
-        //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
-        const userCoords = await getLocation();
-        
-        let userLat = userCoords.latitude;
-        let userLon = userCoords.longitude;
-        let dist = computeLatLongDistance(userLat, userLon, silcharLat, silcharLon);
-        let city = userCoords.city.toLowerCase();
-        let region = userCoords.region;
-        const cityList = ['silchar', 'karimganj', 'hailakandi'];
-        */
-
-        if (silcharDist > maxDist && !cityList.includes(city)) {
-            console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + silcharDist.toFixed(2) + " km)");
-            if (typeof umami !== 'undefined') {
-                umami.track("far:" + city +":"+ type);
+        /*
+        // DISABLED location filtering
+        try {
+            if (typeof silcharDist !== 'undefined' && silcharDist > maxDist && !cityList.includes(city)) {
+                console.log("Click ignored: visitor is too far from Silchar, Assam (distance: " + silcharDist.toFixed(2) + " km)");
+                if (typeof umami !== 'undefined') {
+                    umami.track("far:" + city + ":" + type);
+                }
+                return;
             }
-            return;
-        }
-        
-        /* DISABLED 
-        // stop event propogation
-        if (event && event.stopPropagation) {
-            event.stopPropagation();
+        } catch (error) {
+            console.error('Error in distance check:', error);
         }
         */
-
+        
         // facebook button clicked, not useful
         if (type === 'facebook') {
             if (typeof umami !== 'undefined') {
