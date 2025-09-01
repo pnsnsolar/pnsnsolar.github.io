@@ -70,7 +70,10 @@
     <!-- End Meta Pixel Code -->
 
     <script>
-    const visitStartTime = new Date().getTime();
+    let visitStartTime = new Date().getTime();
+    document.addEventListener('DOMContentLoaded', function() {
+        visitStartTime = new Date().getTime();
+    });
 
     const silcharLat = 24.8333, silcharLon = 92.7833; // Silchar coordinates
     //const silcharLat = 13.0843, silcharLon = 80.2705; // Chennai coordinates
@@ -133,8 +136,8 @@
         }
 
         // Only track if visitor has been on the page for at least 1 second (1000 ms)
-        const currentTime = new Date().getTime();
-        if (currentTime - visitStartTime < 1000) {
+        let currentTime = new Date().getTime();
+        if ((currentTime - visitStartTime) < 1000) {
             console.log("Click ignored: bot detected, visitor has not spent 1 second on page before clicking.");
             if (typeof umami !== 'undefined') {
                 umami.track("bot:" + type);
