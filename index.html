@@ -409,141 +409,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        /* Confirmation Modal Styles */
-        .confirm-modal {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        .confirm-modal-content {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            max-width: 340px;
-            width: 80%;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: slideUp 0.3s ease-out;
-        }
-
-        .confirm-modal h3 {
-            color: #2c3e50;
-            background-color: white;
-            font-size: 1.3em;
-            font-weight: 600;
-        }
-
-        .confirm-modal p {
-            color: #5a6c7d;
-            margin: 0 0 20px 0;
-            font-size: 0.95em;
-            line-height: 1.4;
-        }
-
-        .confirm-modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .confirm-btn, .cancel-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 100px;
-        }
-
-        .confirm-btn {
-            background: linear-gradient(145deg, #27ae60, #2ecc71);
-            color: white;
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
-        }
-
-        .confirm-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
-        }
-
-        .cancel-btn {
-            background: linear-gradient(145deg, #95a5a6, #bdc3c7);
-            color: #2c3e50;
-            box-shadow: 0 4px 12px rgba(149, 165, 166, 0.2);
-        }
-
-        .cancel-btn:hover {
-            background: linear-gradient(145deg, #7f8c8d, #95a5a6);
-            transform: translateY(-1px);
-        }
-
-        .modal-icon {
-            font-size: 2.5em;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .whatsapp-icon {
-            color: #25d366;
-        }
-
-        .phone-icon {
-            color: #3498db;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translate(-50%, -40%);
-            }
-            to { 
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        /* Mobile responsiveness for confirmation modal */
-        @media (max-width: 480px) {
-            .confirm-modal-content {
-                max-width: 90%;
-                padding: 20px;
-            }
-            
-            .confirm-modal-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .confirm-btn, .cancel-btn {
-                width: 100%;
-                min-width: auto;
-            }
-            
-            .header-links {
-                position: sticky;
-                top: 0px;
-            }
-        }
         a.button {
             background-color: white;
             background: -webkit-linear-gradient(rgba(255,255,255,0.2), rgba(200,200,200,0), rgba(100,100,100,0.2));
@@ -558,6 +423,14 @@
             display: inline-flex;
             align-items: center;
             font-size:1rem;
+        }
+        @media (max-width: 600px) {
+            a.button {
+              display: inline-flex;
+              align-items: center;
+              font-size: 1rem;
+              padding: 0.5rem 0.1rem;
+            }
         }
         a:hover {
             text-decoration: none;
@@ -873,19 +746,6 @@
         <p>&copy; 2024 PNSN Solar System LLP. <br>All rights reserved.</p>
     </footer>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="confirm-modal">
-        <div class="confirm-modal-content">
-            <span id="modalIcon" class="modal-icon"></span>
-            <h3 id="modalTitle">Confirm Action</h3>
-            <p id="modalMessage">Are you sure you want to proceed?</p>
-            <div class="confirm-modal-buttons">
-                <button id="confirmBtn" class="confirm-btn">Yes, Continue</button>
-                <button id="cancelBtn" class="cancel-btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Sticky header enhancement on scroll
         let headerLinks = document.querySelector('.header-links');
@@ -903,97 +763,73 @@
             lastScrollTop = scrollTop;
         });
 
-        // Confirmation modal functionality
-        let currentAction = null;
-        let currentUrl = null;
-        let currentEvent = null;
-        
-        function showConfirmModal(type, url, event, originalAction) {
-            currentAction = originalAction;
-            currentUrl = url;
-            currentEvent = event;
-            
-            const modal = document.getElementById('confirmModal');
-            const icon = document.getElementById('modalIcon');
-            const title = document.getElementById('modalTitle');
-            const message = document.getElementById('modalMessage');
-            const confirmBtn = document.getElementById('confirmBtn');
-            
-            if (type === 'whatsapp') {
-                icon.innerHTML = '💬';
-                icon.className = 'modal-icon whatsapp-icon';
-                title.textContent = 'Whatsapp PNSN Solar?';
-                message.textContent = 'We are ready to assist you via WhatsApp.';
-                confirmBtn.textContent = 'Open WhatsApp';
-            } else if (type === 'phone') {
-                icon.innerHTML = '📞';
-                icon.className = 'modal-icon phone-icon';
-                title.textContent = 'Call PNSN Solar?';
-                message.textContent = 'We are here to answer all your questions.';
-                confirmBtn.textContent = 'Call Now';
+    const SUCCESS_DELAY = 10000;
+    let pendingAction = null;
+    let pendingTimer = null;
+
+    function clearPendingAction() {
+        if (pendingTimer) {
+            clearTimeout(pendingTimer);
+            pendingTimer = null;
+        }
+        pendingAction = null;
+    }
+
+    function sendConversion(action) {
+        clearPendingAction();
+        doClickAnalytics(null, action);
+    }
+
+    function scheduleConversion(action) {
+        clearPendingAction();
+        pendingAction = { action, timestamp: Date.now() };
+        pendingTimer = setTimeout(() => {
+            if (pendingAction) {
+                console.log("No return detected, conversion sent for action:");
+                sendConversion(pendingAction.action);
             }
-            
-            modal.style.display = 'block';
-        }
-        
-        function hideConfirmModal() {
-            document.getElementById('confirmModal').style.display = 'none';
-            currentAction = null;
-            currentUrl = null;
-            currentEvent = null;
-        }
-        
-        function proceedWithAction() {
-            if (currentAction && currentUrl && currentEvent) {
-                // Execute the original analytics function
-                if (currentAction === 'wa1') {
-                    doClickAnalytics(currentEvent, 'wa1');
-                } else if (currentAction === 'ph1') {
-                    doClickAnalytics(currentEvent, 'ph1');
-                }
-                
-                // Navigate to the URL
-                if (currentAction === 'ph1') {
-                    window.location.href = currentUrl;
-                } else {
-                    window.open(currentUrl, '_blank');
-                }
+        }, SUCCESS_DELAY);
+    }
+
+    function handleReturnFromAction() {
+        if (!pendingAction) { return; }
+        const elapsed = Date.now() - pendingAction.timestamp;
+        if (elapsed < SUCCESS_DELAY) {
+            console.log("Accidental navigation detected, pending action cleared.");
+            if (typeof umami !== 'undefined') {
+                umami.track('accidental:' + pendingAction.action);
             }
-            hideConfirmModal();
+            clearPendingAction();
+        } else  {
+            console.log("User returned after successful action, conversion sent.");
+            sendConversion(pendingAction.action);
+        } 
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            handleReturnFromAction();
         }
-        
-        // Enhanced click handlers
-        function handleWhatsAppClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            showConfirmModal('whatsapp', 'https://wa.me/918638065505', event, 'wa1');
-            return false;
-        }
-        
-        function handlePhoneClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            showConfirmModal('phone', 'tel:+918638065505', event, 'ph1');
-            return false;
-        }
-        
-        // Modal event listeners
-        document.getElementById('confirmBtn').addEventListener('click', proceedWithAction);
-        document.getElementById('cancelBtn').addEventListener('click', hideConfirmModal);
-        
-        // Close modal when clicking outside
-        document.getElementById('confirmModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                hideConfirmModal();
-            }
-        });
-        
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && document.getElementById('confirmModal').style.display === 'block') {
-                hideConfirmModal();
-            }
-        });
+    });
+    window.addEventListener('pageshow', () => {
+        handleReturnFromAction();
+    });
+
+    function handleWhatsAppClick(event) {
+        scheduleConversion('wa1');
+        event.preventDefault();
+        window.open('https://wa.me/918638065505', '_blank');
+        console.log("WhatsApp link clicked");
+        return false;
+    }
+
+    function handlePhoneClick(event) {
+        scheduleConversion('ph1');
+        event.preventDefault();
+        window.location.href = 'tel:+918638065505';
+        console.log("Phone link clicked");
+        return false;
+    }
     </script>
 </body>
 </html>
