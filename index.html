@@ -267,14 +267,23 @@
             background-color: #333;
             text-align: center;
             font-size:16px;
-        }
-        body {
-            /*background-image: url('https://static.sciencelearn.org.nz/images/images/000/000/254/full/International-Space-Station-ISS20150924-22473-1rqk4pa.jpg?1674163968');*/
-            background: linear-gradient( rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5) ), url('roof1.jpg');
+            /* Background image and overlay */
+            background: radial-gradient( circle at 30% 20%, rgba(0,0,0,0.1), rgba(0,0,0,0.6) ), url('roof1.jpg');
             background-size: cover; /* Ensures the image covers the whole background */
             background-repeat: no-repeat; /* Prevents tiling */
             background-attachment: fixed; /* Keeps the image fixed during scrolling */
             background-position: center;
+        }
+        :root{
+            --brand:#0fb36a; /* brand green */
+            --brand-2:#0a8fda; /* accent blue */
+            --ink:#e9f2ee; /* light text */
+            --muted:#9fb2ac;
+            --card-bg: rgba(10, 12, 12, 0.7);
+            --card-border: rgba(255,255,255,0.15);
+            --glass: rgba(0,0,0,0.45);
+            --glass-strong: rgba(0,0,0,0.7);
+            --section-max: 1100px;
         }
         h1{
             /*background-color: #ffffff;*/
@@ -293,7 +302,7 @@
         }
         h2, h3, h4, h5 {
             color: lightgray;
-            background-color: rgba(0,0,0,0.7);
+            background-color: var(--glass-strong);
             margin: auto;
             padding: 0.25rem;
             width: fit-content;
@@ -310,32 +319,42 @@
             border-radius: 8px;
             font-size: min(1.1rem, 4.5vw);
         }
+        /* Inline layout variant for the badge row (logo + address) */
+        .pmsuryaghar.pmsuryaghar-inline {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .pmsuryaghar.pmsuryaghar-inline h4 {
+            margin: 0 !important;
+        }
         .pmsuryaghar-table {
             color: silver;
             border: 1px solid gray;
             border-radius: 5px;
-            background-color:rgba(0, 0, 0, 0.7);
+            background-color: black;
             margin: 0.1vh auto;
             padding:1vw;
             width: fit-content;
         }
         .pmsuryaghar-table td {
             padding: 0.1em 0.1vw;
-            font-size: min(0.9rem,4vw);
             text-align: left;
             font-weight: normal;
         }
         .slogan{
             display: inline-block;
             font-weight: 500;
-            padding: 2rem;
+            padding: 1rem;
             border-radius: 4px;
             color: whitesmoke;
             font-family: "Baloo Da 2", Futura, sans-serif;
             font-optical-sizing: auto;
             line-height: 1.2;
             font-size: 1.1rem;
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(0, 0, 0, 0.5);
             margin: 0.1vh auto;
         }
 
@@ -373,13 +392,157 @@
             margin-bottom: 1vh;
         }
         .header-links {
-            margin: auto;
-            width: fit-content;
-            background-color: rgba(0,0,0,0.5);
-            padding: 0.25em;
-            margin: 0.25em auto;
+            margin: 0 auto;
+            width: 100%;
+            background-color: var(--glass);
+            padding: 0.5em 0;
             border-radius: 6px;
-            color:lightgray;
+            color:var(--ink);
+            position: sticky;
+            top: 0px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-links.scrolled {
+            background-color: var(--glass-strong);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Confirmation Modal Styles */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .confirm-modal-content {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-width: 340px;
+            width: 80%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .confirm-modal h3 {
+            color: #2c3e50;
+            background-color: white;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .confirm-modal p {
+            color: #5a6c7d;
+            margin: 0 0 20px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .confirm-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .confirm-btn, .cancel-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(145deg, #27ae60, #2ecc71);
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+        }
+
+        .cancel-btn {
+            background: linear-gradient(145deg, #95a5a6, #bdc3c7);
+            color: #2c3e50;
+            box-shadow: 0 4px 12px rgba(149, 165, 166, 0.2);
+        }
+
+        .cancel-btn:hover {
+            background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+            transform: translateY(-1px);
+        }
+
+        .modal-icon {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .whatsapp-icon {
+            color: #25d366;
+        }
+
+        .phone-icon {
+            color: #3498db;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to { 
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Mobile responsiveness for confirmation modal */
+        @media (max-width: 480px) {
+            .confirm-modal-content {
+                max-width: 90%;
+                padding: 20px;
+            }
+            
+            .confirm-modal-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .confirm-btn, .cancel-btn {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .header-links {
+                position: sticky;
+                top: 0px;
+            }
         }
         a.button {
             background-color: white;
@@ -418,20 +581,71 @@
             margin-top: 1rem;
         }
         .service, .contact {
-            background-color: rgba(0,0,0,0.7);
-            color: #ddd;
-            padding: 1.5rem;
-            margin: 0.5rem;
-            border-radius: 8px;
-            border: 1px solid white;
-            box-shadow: 0 0 10px rgba(150,150, 150, 0.8);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+            background-color: var(--card-bg);
+            color: var(--ink);
+            padding: 1.4rem 1.2rem;
+            margin: 0.6rem;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            backdrop-filter: blur(6px);
+        }
+        .service h2, .contact h2, .section-title{
+            color: #f1f5f4;
+            background: transparent;
+            padding: 0.1rem 0.25rem;
+            border-radius: 6px;
+            margin-bottom: 0.25rem;
         }
         .service li {
             margin: 10px 0;
         }
 
+        /* Benefits strip */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            max-width: var(--section-max);
+            margin: 0.8rem auto 0.5rem;
+            padding: 0.6rem;
+        }
+        .benefit {
+            display:flex; align-items:center; gap:10px;
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 10px 12px;
+            color: var(--ink);
+        }
+        .benefit .icon { font-size: 1.2rem; }
+        .benefit .text { font-size: 0.95rem; text-align: left; }
+
+        /* How it works */
+        .how { max-width: var(--section-max); margin: 0.8rem auto; padding: 0 0.5rem; }
+        .steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
+        .step { background: var(--card-bg); border:1px solid var(--card-border); border-radius: 14px; padding:14px; text-align:left; box-shadow: 0 10px 24px rgba(0,0,0,0.18); }
+        .step .label { font-weight:700; color:#e8f7f0; margin: 6px 0 4px; }
+        .step .desc { color: var(--muted); font-size: 0.95rem; }
+
+        /* Testimonials */
+        .testimonials { max-width: var(--section-max); margin: 1rem auto; padding: 0 0.5rem; }
+        .t-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:14px; }
+        .t-card { position:relative; background: var(--card-bg); border:1px solid var(--card-border); border-radius: 14px; padding:14px; text-align:left; box-shadow: 0 8px 22px rgba(0,0,0,0.2); }
+        .t-card .stars { color: gold; font-size: 1rem; }
+        .t-card .q { color: #dfe9e6; font-size: 0.98rem; line-height:1.4; margin: 6px 0; }
+        .t-card .by { color: var(--muted); font-size: 0.9rem; }
+
+        /* FAQ */
+        .faq { max-width: var(--section-max); margin: 1rem auto 1.5rem; text-align:left; padding: 0 0.5rem; }
+        .faq details { background: var(--card-bg); border:1px solid var(--card-border); border-radius:12px; margin:8px 0; padding: 10px 12px; }
+        .faq summary { cursor: pointer; list-style: none; font-weight: 700; color:#e8f7f0; }
+        .faq summary::-webkit-details-marker { display:none; }
+        .faq p { color: var(--muted); margin: 8px 0 0 0; }
+
         footer {
-            background-color: rgba(0,0,0,0.7);
+            background-color: var(--glass-strong);
             color: gray;
             padding: 1rem;
             bottom: 0;
@@ -530,19 +744,16 @@
 <body>
     <div class="side-mask left-mask"></div>
     <div class="side-mask right-mask"></div>
-
-    <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
-    
-    <div class="header-links">
+        <div class="header-links">
         <!-- event.stopPropagation(); -->
-        <a class="button" onclick="doClickAnalytics(event, 'wa1');" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
+        <a class="button" onclick="return handleWhatsAppClick(event);" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
             &nbsp;
             <svg style="align-self: center; padding:0; padding-right:0.25em;" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
               <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
             </svg> 
             Whatsapp&nbsp;
         </a>
-        <a class="button" onclick="doClickAnalytics(event, 'ph1');" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
+        <a class="button" onclick="return handlePhoneClick(event);" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
             &nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" style="padding:0; padding-right:0.1em" fill="currentColor" width="30" height="30" viewBox="0 0 500 500">
                 <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -552,13 +763,15 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
               <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
             </svg> -->
-            
         </a>
-        <h4 style="margin-top:0.5em; white-space: nowrap; font-size:0.9rem;">&nbsp;&nbsp; Rangirkhari Point, Silchar, Assam</h4> <!-- <span style="font-weight: normal;">Open from 9AM to 10PM</span> -->
     </div>
-    <div class="pmsuryaghar">
-        <img style="display:block; width: 200px; opacity: 0.85; margin-top:0.1em" src="govt.jpg" />
-        <!-- <span style="display:block; margin:auto; max-width: 180px; font-size: 0.9rem; background-color: rgba(0, 0, 0, 0.5); padding: 0.1em;">for Solar in Silchar</span> -->
+
+    <h1><span style="font-size: 110%; font-family: Audiowide, Ariel, sans-serif;">PNSN SOLAR</span> <br> <span style="font-family: Lexend, Ariel, sans-serif;">SYSTEM LLP</span></h1>
+    
+
+    <div class="pmsuryaghar pmsuryaghar-inline">
+        <img style="display:block; width: 180px; opacity: 0.85; margin-top:0.1em" src="govt.jpg" />
+        <h4 style="margin-top:0.5em; white-space: nowrap; font-size:0.9rem;">Rangirkhari Point, </br> Silchar, Assam</h4>
     </div>
 
     <div class="msg">
@@ -585,7 +798,7 @@
 
 
         
-
+        <!--
         <div class="slogan-wood">
             <div class="slogan-gold-text">
               <div style="font-variant-caps: small-caps; font-weight:bold; display: inline-block; border-bottom: 1px solid #cfc09f; margin-bottom: 0.25em;">TRUSTED and EXPERIENCED</div>
@@ -593,6 +806,7 @@
               <span style="font-variant-caps: small-caps; font-size:115%;">Expert Installation and Service <br>with Many Happy Customers</span>
             </div>
         </div>
+        -->
 
 
     </header>
@@ -646,28 +860,6 @@
         </section>
     </div>
     <div class="header-links">
-        <a class="button" onclick="doClickAnalytics(event, 'wa2');" style="background-color:#6d8; border:2px solid #0e0; height:18px;" href="https://wa.me/918638065505" target="_blank"> 
-            &nbsp;
-            <svg style="align-self: center; padding:0; padding-right:0.25em;" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
-              <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-            </svg> 
-            Whatsapp&nbsp;
-        </a>
-        <a class="button" onclick="doClickAnalytics(event, 'ph2');" style="background-color:#eef; font-size:1.2em; border:2px solid lightskyblue; color:#2244bb; height:18px" href="tel:+918638065505" target="_blank">
-            &nbsp;
-            <svg xmlns="http://www.w3.org/2000/svg" style="padding:0; padding-right:0.1em" fill="currentColor" width="32" height="32" viewBox="0 0 500 500">
-                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                <path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm90.7 96.7c9.7-2.6 19.9 2.3 23.7 11.6l20 48c3.4 8.2 1 17.6-5.8 23.2L168 231.7c16.6 35.2 45.1 63.7 80.3 80.3l20.2-24.7c5.6-6.8 15-9.2 23.2-5.8l48 20c9.3 3.9 14.2 14 11.6 23.7l-12 44C336.9 378 329 384 320 384C196.3 384 96 283.7 96 160c0-9 6-16.9 14.7-19.3l44-12z"/>
-            </svg>
-            8638065505&nbsp;
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
-              <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
-            </svg> -->
-            
-        </a>
-
-        <div style="padding:0.25em"></div>
-
         <a class="button" style="background-color:skyblue; border:1px solid #08f;" href="https://www.facebook.com/pnsnsolar" target="_blank" onclick="doClickAnalytics(event, 'facebook');">
             &nbsp
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
@@ -680,5 +872,128 @@
         <p>*Terms and Conditions Apply.</p>
         <p>&copy; 2024 PNSN Solar System LLP. <br>All rights reserved.</p>
     </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <span id="modalIcon" class="modal-icon"></span>
+            <h3 id="modalTitle">Confirm Action</h3>
+            <p id="modalMessage">Are you sure you want to proceed?</p>
+            <div class="confirm-modal-buttons">
+                <button id="confirmBtn" class="confirm-btn">Yes, Continue</button>
+                <button id="cancelBtn" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sticky header enhancement on scroll
+        let headerLinks = document.querySelector('.header-links');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 50) {
+                headerLinks.classList.add('scrolled');
+            } else {
+                headerLinks.classList.remove('scrolled');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Confirmation modal functionality
+        let currentAction = null;
+        let currentUrl = null;
+        let currentEvent = null;
+        
+        function showConfirmModal(type, url, event, originalAction) {
+            currentAction = originalAction;
+            currentUrl = url;
+            currentEvent = event;
+            
+            const modal = document.getElementById('confirmModal');
+            const icon = document.getElementById('modalIcon');
+            const title = document.getElementById('modalTitle');
+            const message = document.getElementById('modalMessage');
+            const confirmBtn = document.getElementById('confirmBtn');
+            
+            if (type === 'whatsapp') {
+                icon.innerHTML = '💬';
+                icon.className = 'modal-icon whatsapp-icon';
+                title.textContent = 'Whatsapp PNSN Solar?';
+                message.textContent = 'We are ready to assist you via WhatsApp.';
+                confirmBtn.textContent = 'Open WhatsApp';
+            } else if (type === 'phone') {
+                icon.innerHTML = '📞';
+                icon.className = 'modal-icon phone-icon';
+                title.textContent = 'Call PNSN Solar?';
+                message.textContent = 'We are here to answer all your questions.';
+                confirmBtn.textContent = 'Call Now';
+            }
+            
+            modal.style.display = 'block';
+        }
+        
+        function hideConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            currentAction = null;
+            currentUrl = null;
+            currentEvent = null;
+        }
+        
+        function proceedWithAction() {
+            if (currentAction && currentUrl && currentEvent) {
+                // Execute the original analytics function
+                if (currentAction === 'wa1') {
+                    doClickAnalytics(currentEvent, 'wa1');
+                } else if (currentAction === 'ph1') {
+                    doClickAnalytics(currentEvent, 'ph1');
+                }
+                
+                // Navigate to the URL
+                if (currentAction === 'ph1') {
+                    window.location.href = currentUrl;
+                } else {
+                    window.open(currentUrl, '_blank');
+                }
+            }
+            hideConfirmModal();
+        }
+        
+        // Enhanced click handlers
+        function handleWhatsAppClick(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            showConfirmModal('whatsapp', 'https://wa.me/918638065505', event, 'wa1');
+            return false;
+        }
+        
+        function handlePhoneClick(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            showConfirmModal('phone', 'tel:+918638065505', event, 'ph1');
+            return false;
+        }
+        
+        // Modal event listeners
+        document.getElementById('confirmBtn').addEventListener('click', proceedWithAction);
+        document.getElementById('cancelBtn').addEventListener('click', hideConfirmModal);
+        
+        // Close modal when clicking outside
+        document.getElementById('confirmModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                hideConfirmModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && document.getElementById('confirmModal').style.display === 'block') {
+                hideConfirmModal();
+            }
+        });
+    </script>
 </body>
 </html>
