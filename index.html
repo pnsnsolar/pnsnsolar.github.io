@@ -816,18 +816,25 @@
     });
 
     function handleWhatsAppClick(event) {
-        scheduleConversion('wa1');
         event.preventDefault();
+        if (typeof umami !== 'undefined') {
+            umami.track('click:' + 'wa')
+        }
         window.open('https://wa.me/918638065505', '_blank');
+        scheduleConversion('wa');
         console.log("WhatsApp link clicked");
         return false;
     }
 
     function handlePhoneClick(event) {
-        scheduleConversion('ph1');
         event.preventDefault();
-        window.location.href = 'tel:+918638065505';
+        if (typeof umami !== 'undefined') {
+            umami.track('click:' + 'p');
+        }
+        window.open('tel:+918638065505', '_blank');
+        scheduleConversion('ph');
         console.log("Phone link clicked");
+        
         return false;
     }
     </script>
