@@ -829,7 +829,7 @@
     function handlePhoneClick(event) {
         event.preventDefault();
         if (typeof umami !== 'undefined') {
-            umami.track('click:' + 'p');
+            umami.track('click:' + 'ph');
         }
         window.open('tel:+918638065505', '_blank');
         scheduleConversion('ph');
