@@ -22,7 +22,13 @@
     <!-- Event snippet for Contact Event conversion page
     In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
     <script>
-        function gtag_report_search_conversion(url) {
+        function gtag_report_search_conversion() {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-16789334441/ui9yCLrAtO8ZEKnT48U-'
+            });
+            return false;
+        }
+        /*function gtag_report_search_conversion(url) {
             var callback = function () {
                 if (typeof(url) != 'undefined') {
                     window.location = url;
@@ -33,20 +39,14 @@
                 'event_callback': callback
             });
             return false;
-        }
+        }*/
     </script>
     <!-- Event snippet for pmax-contact conversion page
     In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
     <script>
-        function gtag_report_pmax_conversion(url) {
-        var callback = function () {
-            if (typeof(url) != 'undefined') {
-            window.location = url;
-            }
-        };
+        function gtag_report_pmax_conversion() {
         gtag('event', 'conversion', {
-            'send_to': 'AW-16789334441/UKg3CL638eoaEKnT48U-',
-            'event_callback': callback
+            'send_to': 'AW-16789334441/UKg3CL638eoaEKnT48U-'
         });
         return false;
         }
@@ -820,8 +820,8 @@
         if (typeof umami !== 'undefined') {
             umami.track('click:' + 'wa')
         }
-        window.open('https://wa.me/918638065505', '_blank');
         scheduleConversion('wa');
+        window.open('https://wa.me/918638065505', '_blank');
         console.log("WhatsApp link clicked");
         return false;
     }
@@ -831,8 +831,8 @@
         if (typeof umami !== 'undefined') {
             umami.track('click:' + 'ph');
         }
-        window.open('tel:+918638065505', '_blank');
         scheduleConversion('ph');
+        window.open('tel:+918638065505', '_blank');
         console.log("Phone link clicked");
         
         return false;
