@@ -915,7 +915,7 @@
 
     function handleWhatsAppClickWithConfirmation(event) {
         event.preventDefault();
-        showConfirmationDialog("Do you want to open WhatsApp to chat with us?", () => {
+        showConfirmationDialog("Whatsapp PNSN Solar?", () => {
             sendConversion('wa');
             window.open('https://wa.me/918638065505', '_blank');
             console.log("WhatsApp link confirmed and opened");
@@ -930,7 +930,7 @@
 
     function handlePhoneClickWithConfirmation(event) {
         event.preventDefault();
-        showConfirmationDialog("Do you want to call us now?", () => {
+        showConfirmationDialog("Call PNSN Solar?", () => {
             sendConversion('ph');
             window.open('tel:+918638065505', '_blank');
             console.log("Phone link confirmed and opened");
