@@ -612,21 +612,96 @@
                 max-width: 70vw;
             }
         }
+
+        /* Custom Dialog Box */
+        .dialog-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+        }
+        .dialog-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2c2c2c;
+            color: whitesmoke;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            z-index: 2001;
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dialog-box p {
+            margin: 0 0 20px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        .dialog-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
+        .dialog-buttons button {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .dialog-buttons button:hover {
+            transform: translateY(-2px);
+        }
+        #dialog-confirm-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        #dialog-confirm-btn:hover {
+            background-color: #218838;
+        }
+        #dialog-cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #dialog-cancel-btn:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
+    <div id="custom-dialog-overlay" class="dialog-overlay"></div>
+    <div id="custom-dialog-box" class="dialog-box">
+        <p id="dialog-message"></p>
+        <div class="dialog-buttons">
+            <button id="dialog-confirm-btn">Yes</button>
+            <button id="dialog-cancel-btn">No</button>
+        </div>
+    </div>
     <div class="side-mask left-mask"></div>
     <div class="side-mask right-mask"></div>
         <div class="header-links">
         <!-- event.stopPropagation(); -->
-        <a class="button" onclick="return handleWhatsAppClick(event);" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
+        <a class="button" onclick="return handleWhatsAppClickWithConfirmation(event);" style="background-color:#6d8; border:2px solid #0e0; color: black; height:18px; margin: 0.25rem 0.5rem 0 0.25rem;" href="https://wa.me/918638065505" target="_blank"> 
             &nbsp;
             <svg style="align-self: center; padding:0; padding-right:0.25em;" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
               <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
             </svg> 
             Whatsapp&nbsp;
         </a>
-        <a class="button" onclick="return handlePhoneClick(event);" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
+        <a class="button" onclick="return handlePhoneClickWithConfirmation(event);" style="background-color:#eef; border:2px solid skyblue; color:#2244bb; height:18px; margin: 0.25rem 0.25rem 0 0.5rem; font-size: 1.1em;" href="tel:+918638065505" target="_blank">
             &nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" style="padding:0; padding-right:0.1em" fill="currentColor" width="30" height="30" viewBox="0 0 500 500">
                 <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -836,6 +911,75 @@
         console.log("Phone link clicked");
         
         return false;
+    }
+
+    function handleWhatsAppClickWithConfirmation(event) {
+        event.preventDefault();
+        showConfirmationDialog("Do you want to open WhatsApp to chat with us?", () => {
+            sendConversion('wa');
+            window.open('https://wa.me/918638065505', '_blank');
+            console.log("WhatsApp link confirmed and opened");
+        }, () => {
+            if (typeof umami !== 'undefined') {
+                umami.track('cancel:' + 'wa');
+            }
+            console.log("WhatsApp link cancelled by user");
+        });
+        return false;
+    }
+
+    function handlePhoneClickWithConfirmation(event) {
+        event.preventDefault();
+        showConfirmationDialog("Do you want to call us now?", () => {
+            sendConversion('ph');
+            window.open('tel:+918638065505', '_blank');
+            console.log("Phone link confirmed and opened");
+        }, () => {
+            if (typeof umami !== 'undefined') {
+                umami.track('cancel:' + 'ph');
+            }
+            console.log("Phone link cancelled by user");
+        });
+        return false;
+    }
+
+    function showConfirmationDialog(message, onConfirm, onCancel) {
+        const dialogOverlay = document.getElementById('custom-dialog-overlay');
+        const dialogBox = document.getElementById('custom-dialog-box');
+        const dialogMessage = document.getElementById('dialog-message');
+        const confirmBtn = document.getElementById('dialog-confirm-btn');
+        const cancelBtn = document.getElementById('dialog-cancel-btn');
+
+        dialogMessage.textContent = message;
+        dialogOverlay.style.display = 'block';
+        dialogBox.style.display = 'block';
+
+        const confirmHandler = () => {
+            hideDialog();
+            onConfirm();
+            removeListeners();
+        };
+
+        const cancelHandler = () => {
+            hideDialog();
+            onCancel();
+            removeListeners();
+        };
+
+        const hideDialog = () => {
+            dialogOverlay.style.display = 'none';
+            dialogBox.style.display = 'none';
+        };
+        
+        const removeListeners = () => {
+            confirmBtn.removeEventListener('click', confirmHandler);
+            cancelBtn.removeEventListener('click', cancelHandler);
+            dialogOverlay.removeEventListener('click', cancelHandler);
+        };
+
+        confirmBtn.addEventListener('click', confirmHandler);
+        cancelBtn.addEventListener('click', cancelHandler);
+        dialogOverlay.addEventListener('click', cancelHandler);
     }
     </script>
 </body>
